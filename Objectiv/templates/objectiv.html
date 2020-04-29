@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+        $(document).ready(function () {
+                        
+            $("#ban").click(function(){
+            $("#table2excel").table2excel({
+            filename: "Օբյեկտիվ հետազոտությունների տվյալները" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+            });
+            });
+            });
+            function getobj()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('/objectiv/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showobj)
+                }
+            }
+            function showobj(objectiv)
+            {   
+                $("#GDate").append('<th>' + objectiv.Օրրր + '/' + objectiv.Ամիսսս + '/' + objectiv.Տարիիի +'</th>')
+                $("#marmin").append('<td>' + objectiv.Մարմնակազմությունը + '</td>')
+                $("#snvum").append('<td>' + objectiv.ԻնչպեսԷՍնվում + '</td>')
+                $("#fizikakan").append('<td>' + objectiv.ՖիզիկականԱրատներ + '</td>')
+                $("#marmni").append('<td>' + objectiv.ՄարմնիԾածկույթը + '</td>')
+                $("#limfatik").append('<td>' + objectiv.Լիմֆատիկ + '</td>')
+                $("#voskramkan").append('<td>' + objectiv.Ոսկրամկանային + '</td>')
+                $("#endokrin").append('<td>' + objectiv.էնդոկրին + '</td>')
+                $("#shncharakan").append('<td>' + objectiv.Շնչառական + '</td>')
+                $("#aryun").append('<td>' + objectiv.Արյուն + '</td>')
+                $("#hangzark").append('<td>' + objectiv.հանգզարկ + '</td>')
+                $("#hangzarkar").append('<td>' + objectiv.հանգզարկառ + '</td>')
+                $("#hangzarnvaz").append('<td>' + objectiv.հանգզարկնվազ + '</td>')
+                $("#kqnzark").append('<td>' + objectiv.կքնզարկ + '</td>')
+                $("#kqnzarkar").append('<td>' + objectiv.կքնզարկառ + '</td>')
+                $("#kqnzarknvaz").append('<td>' + objectiv.կքնզարկնվազ + '</td>')
+                $("#ropezark").append('<td>' + objectiv.րոպեզարկ + '</td>')
+                $("#ropezarkar").append('<td>' + objectiv.րոպեզարկառ + '</td>')
+                $("#ropezarknvaz").append('<td>' + objectiv.րոպեզարկնվազ + '</td>')
+                $("#mars").append('<td>' + objectiv.մարս + '</td>')
+                $("#lyard").append('<td>' + objectiv.լյարդ + '</td>')
+                $("#payc").append('<td>' + objectiv.փայծ + '</td>')
+                $("#mizaser").append('<td>' + objectiv.միզասեռ + '</td>')  
+                $("#nyard").append('<td>' + objectiv.Նյարդ + '</td>')  
+                $("#tesoxutyun").append('<td>' + objectiv.տեսողություն + '</td>')  
+                $("#lsoxutyun").append('<td>' + objectiv.լսողություն + '</td>')  
+                $("#bjishk").append('<td>' + objectiv.Բժիշկ + '</td>')  
+                $("#virabuj").append('<td>' + objectiv.Վիրաբուժ + '</td>')  
+                $("#ezr").append('<td>' + objectiv.եզր + '</td>')  
+
+            }
+
+            function s()
+            {
+                $("#GDate").append("<th width='20'>"+"<label for='or'>օր։</label>" +"<input id='or' type='text'>" + "<label for='amis'>ամիս։</label>"+"<input id='amis' type='text'>"  + "<label for='tari'>տարի։</label>"+"<input id='tari' type='text'>" +"</th>" + "");            
+                $("#marmin").append(" <td><textarea id='marminn'></textarea></td>")
+                $("#snvum").append(" <td><textarea id='snvumm'></textarea></td>")
+                $("#fizikakan").append(" <td><textarea id='fizikakann'></textarea></td>")
+                $("#marmni").append(" <td><textarea id='marmnii'></textarea></td>")
+                $("#limfatik").append(" <td><textarea id='limfatikk'></textarea></td>")
+                $("#voskramkan").append(" <td><textarea id='voskramkann'></textarea></td>")
+                $("#endokrin").append(" <td><textarea id='endokrinn'></textarea></td>")
+                $("#shncharakan").append(" <td><textarea id='shncharakann'></textarea></td>")
+                $("#aryun").append(" <td><textarea id='aryunn'></textarea></td>")
+                $("#hangzark").append(" <td><textarea id='hangzarkk'></textarea></td>")
+                $("#hangzarkar").append(" <td><textarea id='hangzarkarr'></textarea></td>")
+                $("#hangzarnvaz").append(" <td><textarea id='hangzarnvazz'></textarea></td>")
+                $("#kqnzark").append(" <td><textarea id='kqnzarkk'></textarea></td>")
+                $("#kqnzarkar").append(" <td><textarea id='kqnzarkarr'></textarea></td>")
+                $("#kqnzarknvaz").append(" <td><textarea id='kqnzarknvazz'></textarea></td>")
+                $("#ropezark").append(" <td><textarea id='ropezarkk'></textarea></td>")
+                $("#ropezarkar").append(" <td><textarea id='ropezarkarr'></textarea></td>")
+                $("#ropezarknvaz").append(" <td><textarea id='ropezarknvazz'></textarea></td>")
+                $("#mars").append(" <td><textarea id='marss'></textarea></td>")
+                $("#lyard").append(" <td><textarea id='lyardd'></textarea></td>")
+                $("#payc").append(" <td><textarea id='paycc'></textarea></td>")
+                $("#mizaser").append(" <td><textarea id='mizaserr'></textarea></td>")
+                $("#nyard").append(" <td><textarea id='nyardd'></textarea></td>")
+                $("#tesoxutyun").append(" <td><textarea id='tesoxutyunn'></textarea></td>")
+                $("#lsoxutyun").append(" <td><textarea id='lsoxutyunn'></textarea></td>")
+                $("#bjishk").append(" <td><textarea id='bjishkk'></textarea></td>")
+                $("#virabuj").append(" <td><textarea id='virabujj'></textarea></td>")
+                $("#ezr").append(" <td><textarea id='ezrr'></textarea></td>")  
+            }
+            function addObjectiv()
+            {
+                $.ajax({
+                    "url":'/objectiv/list',
+                    "data":{
+                    "bb": '{{request.GET.id}}',
+                    "Օրրր": $("#or").val(),
+                    "Ամիսսս": $("#amis").val(),
+                    "Տարիիի": $("#tari").val(),
+                    "Մարմնակազմությունը": $("#marminn").val(),
+                    "ԻնչպեսԷՍնվում": $("#snvumm").val(),
+                    "ՖիզիկականԱրատներ": $("#fizikakann").val(),
+                    "ՄարմնիԾածկույթը": $("#marmnii").val(),
+                    "Լիմֆատիկ": $("#limfatikk").val(),
+                    "Ոսկրամկանային": $("#voskramkann").val(),
+                    "էնդոկրին": $("#endokrinn").val(),
+                    "Շնչառական": $("#shncharakann").val(),
+                    "Արյուն": $("#aryunn").val(),
+                    "հանգզարկ": $("#hangzarkk").val(),
+                    "հանգզարկառ": $("#hangzarkarr").val(),
+                    "հանգզարկնվազ": $("#hangzarnvazz").val(),
+                    "կքնզարկ": $("#kqnzarkk").val(),
+                    "կքնզարկառ": $("#kqnzarkarr").val(),
+                    "կքնզարկնվազ": $("#kqnzarknvazz").val(),
+                    "րոպեզարկ": $("#ropezarkk").val(),
+                    "րոպեզարկառ": $("#ropezarkarr").val(),
+                    "րոպեզարկնվազ": $("#ropezarknvazz").val(),
+                    "մարս": $("#marss").val(),
+                    "լյարդ": $("#lyardd").val(),
+                    "փայծ": $("#paycc").val(),
+                    "միզասեռ": $("#mizaserr").val(),
+                    "Նյարդ": $("#nyardd").val(),
+                    "տեսողություն": $("#tesoxutyunn").val(),
+                    "լսողություն": $("#lsoxutyunn").val(),
+                    "Բժիշկ": $("#bjishkk").val(),
+                    "Վիրաբուժ": $("#virabujj").val(),
+                    "եզր": $("#ezrr").val(),
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getobj()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Օբյեկտիվ հետազոտությունների տվյալները</div></br>
+        <button onclick="s()" id='pahpanel' class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='GDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="marmin">
+                    <td>
+                    Մարմնակազմությունը </br> (ամուր, միջին, թույլ)
+                    </td>
+                <tr id='snvum'>
+                    <td>
+                    Ինչպես է սնվում(վատ,</br>միջին, լավ, ավելցուկա-</br>յին)
+                    </td>
+                </tr>
+                <tr id='fizikakan'>
+                    <td>
+                    Ֆիզիկական արատները<br>և մարմնական թերու-</br>թյունները    
+                    </td>
+                </tr>
+                <tr id='marmni'>
+                    <td>
+                        Մարմնի ծածկույթը
+                    </td>
+                </tr>
+                <tr id='limfatik'>
+                    <td>
+                        Լիմֆատիկ համակարգը
+                    </td>
+                </tr>
+                <tr id='voskramkan'>
+                    <td>
+                        Ոսկրամկանային</br>համակարգը և հոդերը
+                    </td>
+                </tr>
+                <tr id='endokrin'>
+                    <td>
+                        էնդոկրին համակարգը
+                    </td>
+                </tr>
+                <tr id='shncharakan'>
+                    <td>
+                        Շնչառական օրգանները
+                    </td>
+                </tr>
+                <tr id='aryun'>
+                    <td>
+                        Արյան շրջանառության օրգանները
+                    </td>
+                </tr>
+                <tr id='hangzark'>
+                    <td>
+                        Զարկերակը </br>հանգիստ վիճակում
+                    </td>
+                </tr>
+                <tr id='hangzarkar'>
+                    <td>
+                        Զարկեր․ ճնշումը առավել․</br> հանգիստ վիճակում
+                    </td>
+                </tr>
+                <tr id='hangzarnvaz'>
+                    <td>
+                        Զարկեր․ ճնշումը նվազագ․</br> հանգիստ վիճակում
+                    </td>
+                </tr>
+                <tr id='kqnzark'>
+                    <td>
+                        Զարկերակը </br>20 կքանստից հետո
+                    </td>
+                </tr>
+                <tr id='kqnzarkar'>
+                    <td>
+                        Զարկեր․ ճնշումը առավել․</br> 20 կքանստից հետո
+                    </td>
+                </tr>
+                <tr id='kqnzarknvaz'>
+                    <td>
+                        Զարկեր․ ճնշումը նվազագ․</br> 20 կքանստից հետո
+                    </td>
+                </tr>
+                <tr id='ropezark'>
+                    <td>
+                        Զարկերակը </br>2 րոպե անց
+                    </td>
+                </tr>
+                <tr id='ropezarkar'>
+                    <td>
+                        Զարկեր․ ճնշումը առավել․</br> 2 րոպե անց
+                    </td>
+                </tr>
+                <tr id='ropezarknvaz'>
+                    <td>
+                        Զարկեր․ ճնշումը նվազագ․</br> 2 րոպե անց
+                    </td>
+                </tr>
+                <tr id='mars'>
+                    <td>
+                       Մարսողության </br> օրգանները
+                    </td>
+                </tr>
+                <tr id='lyard'>
+                    <td>
+                        Լյարդ
+                    </td>
+                </tr>
+                <tr id='payc'>
+                    <td>
+                        Փայծախ
+                    </td>
+                </tr>
+                <tr id='mizaser'>
+                    <td>
+                        միզասեռական </br> օրգանները
+                    </td>
+                </tr>
+                <tr id='nyard'>
+                    <td>
+                        Նյարդային </br> համակարգը
+                    </td>
+                </tr>
+                <tr id='tesoxutyun'>
+                    <td>
+                        Տեսողությունը
+                    </td>
+                </tr>
+                <tr id='lsoxutyun'>
+                    <td>
+                        Լսողությունը
+                    </td>
+                </tr>
+                <tr id='bjishk'>
+                    <td>
+                        Բժշկի(թերապևտի)</br>
+                        եզրակացությունը և</br>
+                        ցուցումները լրացուցիչ</br>
+                        հետազոտման</br>
+                        վերաբերյալ
+                    </td>
+                </tr>
+                <tr id='virabuj'>
+                    <td>
+                        Վիրաբուժական</br>
+                        հետազոտություններից</br>
+                        ստացված լրացուցիչ</br>
+                        տվյալները
+                    </td>
+                </tr>
+                <tr id='ezr'>
+                    <td>
+                        Բժշկի(վիրաբուժի)</br>
+                        եզրակացությունը և</br>
+                        ցուցումները լրացուցիչ</br>
+                        հետազոտման</br>
+                        վերաբերյալ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addObjectiv()" id='asdf' class='action-button shadow animate green'>պահպանել</button>
+        
+    </body>
+</html>

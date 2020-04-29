@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script>
+            var URL = '/backend/Grancum/';
+            $(document).ready(
+                function()
+                {
+                    $("#Grancumner").hide()
+                }
+            );
+            function getGrancum()
+            {
+                
+                $.getJSON(URL + '{{request.GET.id}}')
+                .done(showGrancum)
+                .fail(
+                function()
+                {
+                    alert("Գրանցումը գտնված չէ")
+                }
+                );
+            }
+            function showGrancum(grancum)
+            {   
+                $("#asdf").val(grancum.id)
+                $("#anun").val(grancum.Անուն)
+                $("#azganun").val(grancum.Ազգանուն)
+                $("#hayranun").val(grancum.Հայրանուն)
+                $("#GrancmanAmsativ").val(grancum.ԳրանցմանԱմսաթիվ)
+            }
+            function getAnamnez()
+            {
+                
+                $.getJSON('/backend/anamnez/' + '{{request.GET.id}}')
+                .done(showAnamnez)
+            }
+            function showAnamnez(anamnez)
+            {  
+                $("#hivandacele").val(anamnez.ՀիվանդացելԷ)
+                $("#viravorumnery").val(anamnez.վիրավորումները)
+                $("#kontuzianery").val(anamnez.Կոնտուզիաները)
+                $("#virahatutyunnery").val(anamnez.Վիրահատությունները)
+                $("#ardzakurdnery").val(anamnez.ԱրձակուրդներըՀիվանդությանՊատճառով)
+                $("#bujumnaroxj").val(anamnez.ԲուժումնԱռողջարաններում)
+                $("#jarangakanutyun").val(anamnez.Ժառանգականությունը)
+                $("#inchdexer").val(anamnez.ԻնչԴեղերՉիԿարողանումԸնդունել)
+                $("#nerarkumner").val(anamnez.ՆերարկումներիԱզդեցությունը)
+                $("#vnasakar").val(anamnez.ՎնասակարՍովորությունները)
+                $("#hatuk").val(anamnez.ՀատուկՆշումներ)
+            }
+            function addanamnez(){
+                $.ajax({
+                    "url": '/backend/anamnez',
+                    "data": {
+                        "ՀՀ": '{{request.GET.id}}',
+                        "ՀիվանդացելԷ" : $("#hivandacele").val(),
+                        "վիրավորումները" : $("#viravorumnery").val(),
+                        "Կոնտուզիաները": $("#kontuzianery").val(),
+                        "Վիրահատությունները" : $("#virahatutyunnery").val(),
+                        "ԱրձակուրդներըՀիվանդությանՊատճառով" : $("#ardzakurdnery").val(),
+                        "ԲուժումնԱռողջարաններում" : $("#bujumnaroxj").val(),
+                        "Ժառանգականությունը" : $("#jarangakanutyun").val(),
+                        "ԻնչԴեղերՉիԿարողանումԸնդունել" : $("#inchdexer").val(),
+                        "ՆերարկումներիԱզդեցությունը" : $("#nerarkumner").val(),
+                        "ՎնասակարՍովորությունները" : $("#vnasakar").val(),
+                        "ՀատուկՆշումներ" : $("#hatuk").val(),
+                    },
+                    "type":"post",
+                    "success" : add_success,
+                    "error" : add_error
+                });
+            }
+            function add_success()
+            {
+                alert("Գրանցված է")
+            }
+
+            function add_error()
+            {
+                alert("Այս զինծառայողի համար անամնեզ բաժինը լրացված է")
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+            
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+	            background-color: #82BF56;
+	            border-bottom: 5px solid #669644;
+	            text-shadow: 0px -2px #669644;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+    </head>
+    <body onload="getGrancum(), getAnamnez()" id="body">
+        <div style="background-color:navy;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Անամնեզ</div>
+        <p>
+            Հ/Հ։ {{request.GET.id}}
+            </br>
+        </p>
+        <p>
+            Անուն։
+            <input type="text" id="anun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Ազգանուն։
+            <input type="text" id="azganun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Հայրանուն։
+            <input type="text" id="hayranun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Գրանցման ամսաթիվ։
+            <input type="text" id="GrancmanAmsativ" value="" readonly>
+            </br>
+        </p>
+        <p>
+            1․ՀիվանդացելԷ(հիվանդությունը, որ տարիքում)։
+            <textarea id="hivandacele"></textarea>
+            </br>
+        </p>
+        <p>
+            2․ա) Վիրավորումները:
+            <textarea type="text" id='viravorumnery'></textarea>
+            </br>
+        </p>
+        <p>
+            2․բ) Կոնտուզիաները:
+            <textarea type="date" id='kontuzianery' ></textarea>
+        </br>
+        </p>
+        <p>
+            3․Վիրահատությունները:
+            <textarea type="text" id='virahatutyunnery' ></textarea>
+        </br>
+        </p>
+        <p>
+            4․ Արձակուրդները հիվանդության պատճառով:
+            <textarea id='ardzakurdnery'></textarea>
+            </br>
+        </p>
+        <p>
+            5․ Բուժումն առողջարաններում:
+            <textarea type="date" id="bujumnaroxj" ></textarea>
+        </br>
+        </p>
+        <p>
+            6․ Ժառանգականությունը (ընտանեկան անամնեզ):
+            <textarea id='jarangakanutyun'></textarea>
+        </br>
+        </p>
+        <p>
+            7․ Ինչ դեղեր չի կարողանում ընդունել:
+            <textarea type="text" id="inchdexer"></textarea>
+        </br>
+        </p>
+        <p>
+            8․ Ներարկումների ազդեցությունը(օրգանիզմի արձագանքը):
+            <textarea type="text" id="nerarkumner"></textarea>
+        </br>
+        </p>
+        <p>
+            9․ Վնասակար սովորությունները(խմել, ծխել և այլն):
+            <textarea type="text" id="vnasakar"></textarea>
+        </br>
+        </p>
+        <p>
+            10․ Հատուկ նշումներ:
+            <textarea type="text" id="hatuk"></textarea>
+        </br>
+        </p>   
+        <p>
+            <button class='action-button shadow animate blue' onclick="addanamnez()">պահպանել</button>
+        </p>
+    </body>
+</html>

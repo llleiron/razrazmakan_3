@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+         $(document).ready(function () {
+                        
+                        $("#ban").click(function(){
+                        $("#table2excel").table2excel({
+                        filename: "Բուժկանխարգելիչ ցուցումները" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                        });
+                    });
+                    });
+            function getkanx()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('/kanxargelich/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showkanx)
+                }
+            }
+            function showkanx(kanxargelich)
+            {   
+                $("#QEDate").append('<th>' + kanxargelich.ՕՕՕրրր + '/' + kanxargelich.ԱԱԱմիսսս + '/' + kanxargelich.ՏՏՏարիիի +'</th>')
+                $("#Nshanakvac").append('<td>' + kanxargelich.Նշանակված + '</td>')
+                $("#bujkanx").append('<td>' + kanxargelich.Բուժկանխարգելիչմ + '</td>')
+                $("#zoramas").append('<td>' + kanxargelich.Զորամաս + '</td>')
+            }
+
+            function p()
+            {
+                $("#QEDate").append("<th width='20'>"+"<label for='or'>օր։</label>" +"<input id='or' type='text'>" + "<label for='amis'>ամիս։</label>"+"<input id='amis' type='text'>"  + "<label for='tari'>տարի։</label>"+"<input id='tari' type='text'>" +"</th>" + "");            
+                $("#Nshanakvac").append(" <td><textarea id='Nshanakvacc'></textarea></td>")
+                $("#bujkanx").append(" <td><textarea id='bujkanxx'></textarea></td>")
+                $("#zoramas").append(" <td><textarea id='zoramass'></textarea></td>")
+            }
+            function addKanxargelich()
+            {
+                $.ajax({
+                    "url":'/kanxargelich/list',
+                    "data":{
+                    "jo": '{{request.GET.id}}',
+                    "ՕՕՕրրր": $("#or").val(),
+                    "ԱԱԱմիսսս": $("#amis").val(),
+                    "ՏՏՏարիիի": $("#tari").val(),
+                    "Նշանակված": $("#Nshanakvacc").val(),
+                    "Զորամաս": $("#zoramass").val(),
+                    "Բուժկանխարգելիչմ": $("#bujkanxx").val(),
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getkanx()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Բուժկանխարգելիչ ցուցումները ամենամյա բուժզննման ենթարկվելիս, դրանց կատարումը և արդյունքները</div></br>
+        <button onclick="p()" id='pahpanel' class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='QEDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="Nshanakvac">
+                    <td>
+                    Նշանակված</br>
+                    բուժկանխարգելիչ</br>
+                    միջոցառումները
+                    </td>
+                <tr id='bujkanx'>
+                    <td>
+                    Բուժկանխարգելիչ</br>
+                    միջոցառումների</br>
+                    կատարումը և</br>
+                    արդյունավետու-</br>
+                    թյունը նախորդ</br>
+                    տարում
+                    </td>
+                </tr>
+                <tr id='zoramas'>
+                    <td>
+                    Զորամասի</br>
+                    (ստորաբաժանման)</br>
+                    բժշկի ազգանունը,</br>
+                    անունը,</br>
+                    հայրանունը,</br>
+                    ստորագրությունը    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addKanxargelich()" id='asdf' class='action-button shadow animate green'>պահպանել</button>
+        
+    </body>
+</html>

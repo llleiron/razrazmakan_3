@@ -1,0 +1,210 @@
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script>
+            var URL = '/backend/Grancum/';
+            $(document).ready(
+                function(){
+                    $("#Grancumner").hide()
+                }
+            );
+            function getGrancum()
+            {
+                
+                $.getJSON(URL + '{{request.GET.id}}')
+                .done(showGrancum)
+                .fail(function()
+                {
+                    alert("Գրանցումը գտնված չէ")
+                }
+                );
+            }
+            function showGrancum(grancum)
+            {   
+                $("#asdf").val(grancum.id)
+                $("#anun").val(grancum.Անուն)
+                $("#azganun").val(grancum.Ազգանուն)
+                $("#hayranun").val(grancum.Հայրանուն)
+                $("#GrancmanAmsativ").val(grancum.ԳրանցմանԱմսաթիվ)
+            }
+            function getYndhanur()
+            {
+                
+                $.getJSON('/backend/yndhanur/' + '{{request.GET.id}}')
+                .done(showYndhanur)
+                // .fail(function()
+                // {
+                //     alert("Գրանցումը գտնված չէ")
+                // }
+                // );
+            }
+            function showYndhanur(yndhanur)
+            {   
+                $("#asdf").val(yndhanur.id)
+                $("#zinkochum").val(yndhanur.Զինկոչումը)
+                $("#aryanxumb").val(yndhanur.ԱրյանԽումբը)
+                $("#Birthdate").val(yndhanur.ԾննդյանՏարեթիվը)
+                $("#azgutyun").val(yndhanur.Ազգությունը)
+                $("#krtutyun").val(yndhanur.Կրթությունը)
+                $("#tsarayutyun").val(yndhanur.ԾառայությանԱնցնելուԱմսաթիվը)
+                $("#yntanekan").val(yndhanur.ԸնտանեկանԴրությունը)
+                $("#tanhasce").val(yndhanur.ՏանՀասցեն)
+                $("#tanheraxos").val(yndhanur.ՏանՀեռախոսահամարը)
+                $("#TsarayutyanHasce").val(yndhanur.ԾառայավայրիՀասցեն)
+                $("#tsrayutyanherakhos").val(yndhanur.ԾառայավայրիՀեռախոսահամարը)
+            }
+            function addyndhanur(){
+                $.ajax({
+                    "url": '/backend/yndhanur/' + '{{request.GET.id}}' + '/',
+                    "data": {
+                        "հհ": '{{request.GET.id}}',
+                        "Զինկոչումը" : $("#zinkochum").val(),
+                        "ԱրյանԽումբը" : $("#aryanxumb").val(),
+                        "ԾննդյանՏարեթիվը": $("#Birthdate").val(),
+                        "Ազգությունը" : $("#azgutyun").val(),
+                        "Կրթությունը" : $("#krtutyun").val(),
+                        "ԾառայությանԱնցնելուԱմսաթիվը" : $("#tsarayutyun").val(),
+                        "ԸնտանեկանԴրությունը" : $("#yntanekan").val(),
+                        "ՏանՀասցեն" : $("#tanhasce").val(),
+                        "ՏանՀեռախոսահամարը" : $("#tanheraxos").val(),
+                        "ԾառայավայրիՀասցեն" : $("#TsarayutyanHasce").val(),
+                        "ԾառայավայրիՀեռախոսահամարը" : $("#tsrayutyanherakhos").val(),
+                    },
+                    "type":"put",
+                    "success" : add_success,
+                    "error" : add_error
+                })
+            }
+            function add_success()
+            {
+                alert("պահպանված է")
+            }
+
+            function add_error()
+            {
+                alert("ինչ որ մի բան սխալ է !!")
+            }
+        </script>
+        <style>
+        .animate
+        {
+	    transition: all 0.1s;
+	    -webkit-transition: all 0.1s;
+        }
+
+        .action-button
+        {
+	    position: relative;
+	    padding: 5px 20px;
+        margin: 0px 10px 10px 0px;
+        float: left;
+	    border-radius: 10px;
+	    font-family: 'Pacifico', cursive;
+	    font-size: 25px;
+	    color: #FFF;
+	    text-decoration: none;	
+        }   
+        .blue
+        {
+	    background-color: #3498DB;
+	    border-bottom: 5px solid #2980B9;
+	    text-shadow: 0px -2px #2980B9;
+        }
+        .action-button:active
+        {
+            transform: translate(0px,5px);
+        -webkit-transform: translate(0px,5px);
+            border-bottom: 1px solid;
+        }
+        #body
+        {
+            background-color: rgb(185, 185, 184);
+        }
+        </style>
+    </head>
+    <body onload="getGrancum(), getYndhanur()" id='body'>
+        <div style="background-color:navy;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Ընդհանուր տեղեկություններ</div>
+        <p>
+            Հ/Հ։ {{request.GET.id}}
+            </br>
+        </p>
+        <p>
+            Անուն։
+            <input type="text" id="anun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Ազգանուն։
+            <input type="text" id="azganun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Հայրանուն։
+            <input type="text" id="hayranun" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Գրանցման ամսաթիվ։
+            <input type="text" id="GrancmanAmsativ" value="" readonly>
+            </br>
+        </p>
+        <p>
+            Զինկոչումը:
+            <textarea id="zinkochum"></textarea>
+            </br>
+        </p>
+        <p>
+            Արյան խումբը:
+            <input type="text" id='aryanxumb' readonly>
+            </br>
+        </p>
+        <p>
+            Ծննդյան տարեթիվը:
+            <input type="date" id='Birthdate' readonly>
+        </br>
+        </p>
+        <p>
+            Ազգությունը:
+            <input type="text" id='azgutyun' readonly>
+        </br>
+        </p>
+        <p>
+            Կրթությունը:
+            <textarea id='krtutyun'></textarea>
+            </br>
+        </p>
+        <p>
+            Ծառայության անցնելու ամսաթիվը:
+            <input type="date" id="tsarayutyun" readonly>
+        </br>
+        </p>
+        <p>
+            Ընտանեկան դրությունը:
+            <textarea id='yntanekan' ></textarea>
+        </br>
+        </p>
+        <p>
+            Տան հասցեն:
+            <input type="text" id="tanhasce">
+        </br>
+        </p>
+        <p>
+            Տան հեռախոսահամարը:
+            <input type="text" id="tanheraxos">
+        </br>
+        </p>
+        <p>
+            Ծառայավայրի հասցեն:
+            <input type="text" id="TsarayutyanHasce">
+        </br>
+        </p>
+        <p>
+            Ծառայավայրի հեռախոսահամարը:
+            <input type="text" id="tsrayutyanherakhos">
+        </br>
+        </p>   
+        <p>
+            <button class='action-button shadow animate blue' onclick="addyndhanur()">պահպանել</button>
+        </p>
+    </body>
+</html>

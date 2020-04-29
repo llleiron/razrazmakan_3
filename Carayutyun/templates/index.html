@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+                        $(document).ready(function () {
+                        
+                            $("#ban").click(function(){
+                            $("#table2excel").table2excel({
+                            filename: "Ծառայության և կենցաղային պայմանները" + "{{request.GET.id}}" + "-ի" + ".xls"
+                            });
+                        });
+                        });
+                        
+                    
+            
+            function getcara()
+            {
+                 for(let i = 2021; i < 2100; i++)
+                 {
+                    a = $.getJSON('/carayutyun/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showcara)
+                 }
+            }
+            function showcara(carayutyun)
+            {   
+                $("#newDate").append('<th>' + carayutyun.day + '/' + carayutyun.month + '/' + carayutyun.year +'</th>')
+                $("#love").append('<td>' + carayutyun.ԾառայութայնԵվԿենցաղայինՊայմանները + '</td>')
+                $("#loove").append('<td>' + carayutyun.ԱշխատանքիԲնույթը + '</td>')
+                $("#looove").append('<td>' + carayutyun.ԲնակկենցաղայինՊայմանները + '</td>')
+                $("#loooove").append('<td>' + carayutyun.Սնունդը + '</td>')
+                $("#looooove").append('<td>' + carayutyun.Քունը + '</td>')
+                $("#loooooove").append('<td>' + carayutyun.ՖիզիկականՊատրաստությունը + '</td>')
+                $("#looooooove").append('<td>' + carayutyun.Արձակուրդը + '</td>')
+
+            }
+            function l()
+            {
+                $("#newDate").append("<th width='20'>"+"<label for='lop'>օր։</label>" +"<input id='lop' type='text'>" + "<label for='loop'>ամիս։</label>"+"<input id='loop' type='text'>"  + "<label for='looop'>տարի։</label>"+"<input id='looop' type='text'>" +"</th>" + "");            
+                $("#love").append(" <td><textarea id='loooop'></textarea></td></tr>")
+                $("#loove").append(" <td><textarea id='looooop'></textarea></td></tr>")
+                $("#looove").append(" <td><textarea id='loooooop'></textarea></td></tr>")
+                $("#loooove").append(" <td><textarea id='looooooop'></textarea></td></tr>")
+                $("#looooove").append(" <td><textarea id='loooooooop'></textarea></td></tr>")
+                $("#loooooove").append(" <td><textarea id='looooooooop'></textarea></td></tr>")
+                $("#looooooove").append(" <td><textarea id='loooooooooop'></textarea></td></tr>")  
+            }
+            function addCarayutyun()
+            {
+                $.ajax({
+                    "url":'/carayutyun/list',
+                    "data":{
+                    "day": $("#lop").val(),
+                    "month": $("#loop").val(),
+                    "year": $("#looop").val(),
+                    "ԾառայութայնԵվԿենցաղայինՊայմանները": $("#loooop").val(),
+                    "ԱշխատանքիԲնույթը": $("#looooop").val(),
+                    "ԲնակկենցաղայինՊայմանները": $("#loooooop").val(),
+                    "Սնունդը": $("#looooooop").val(),
+                    "Քունը": $("#loooooooop").val(),
+                    "ՖիզիկականՊատրաստությունը": $("#looooooooop").val(),
+                    "Արձակուրդը": $("#loooooooooop").val(),
+                    "ll": '{{request.GET.id}}',
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+    // });
+
+       </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+             #ban{
+                right: 65px;
+            } 
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getcara()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Ծառայութայն և կենցաղային պայմանները</div></br>
+        <button onclick="l()" id="pahpanel" class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table  id='table2excel'>
+            <thead>
+                <tr id='newDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="love">
+                    <td>
+                    Ծառայության և կենցաղային </br>պայմանները
+                    </td>
+                <tr id='loove'>
+                    <td>
+                        Աշխատանքի բնույթը(շարային, </br>շտաբային, մանկավարժական  և</br> այլն)
+                    </td>
+                </tr>
+                <tr id='looove'>
+                    <td>
+                        Բնակենցաղային պայմանների </br>բնութագիրը
+                    </td>
+                </tr>
+                <tr id='loooove'>
+                    <td>
+                        Սնունդը(կանոնավոր, անկանոն, </br> օրը քանի անգամ, դիետիկ)
+                    </td>
+                </tr>
+                <tr id='looooove'>
+                    <td>
+                        Քնի տևողությունը և բնույթը
+                    </td>
+                </tr>
+                <tr id='loooooove'>
+                    <td>
+                        Ֆիզիկական պատրաստությու-</br>նը։ Ինքնուրույն մարզումները</br>(պարբերաբար, անկանոն)
+                    </td>
+                </tr>
+                <tr id='looooooove'>
+                    <td>
+                        Արձակուրդը(որտեղ, երբ է անց-</br>կացրել, որ հանգստյան տանը,</br>առողջարանում, տուրիստական</br> արշավում և այլն
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addCarayutyun()" class='action-button shadow animate green' id='asdf'>պահպանել</button>
+    </body>
+</html>

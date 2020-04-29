@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                        
+                        $("#ban").click(function(){
+                        $("#table2excel").table2excel({
+                        filename: "Գանգաթներն առողջական վիճակից ամենամյա բուժզննման ենթարկվելիս" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                        });
+                    });
+                    });
+            function getcara()
+            {
+                 for(let i = 2021; i < 2100; i++)
+                 {
+                
+                  a = $.getJSON('/gangatner/detail/' + '{{request.GET.id}}' + '/' + i)
+                  .done(showcara)
+                 }
+            }
+            function showcara(gangat)
+            {   
+                $("#oldDate").append('<th>' + gangat.օր + '/' + gangat.ամիս + '/' + gangat.տարի +'</th>')
+                $("#raz").append('<td>' + gangat.գանգաթներ + '</td>')
+
+            }
+
+             function l(){
+                $("#oldDate").append("<th width='20'>"+"<label for='raaz'>օր։</label>" +"<input id='raaz' type='text'>" + "<label for='raaaz'>ամիս։</label>"+"<input id='raaaz' type='text'>"  + "<label for='raaaaz'>տարի։</label>"+"<input id='raaaaz' type='text'>" +"</th>" + "");            
+                $("#raz").append(" <td><textarea id='raaaaaz'></textarea></td></tr>")
+             }
+             function addCarayutyun()
+             {
+                $.ajax({
+                    "url":'/gangatner/list',
+                    "data":{
+                    "gg": '{{request.GET.id}}',
+                    "օր": $("#raaz").val(),
+                    "ամիս": $("#raaaz").val(),
+                    "տարի": $("#raaaaz").val(),
+                    "գանգաթներ": $("#raaaaaz").val(),
+                 },
+                 "type":"post",
+                 "success" : function(){alert('a')},
+                 "error" : function(){alert('b')},
+                });
+             }
+        </script>
+                       <style>
+                        .animate
+                        {
+                        transition: all 0.1s;
+                        -webkit-transition: all 0.1s;
+                        }
+                
+                        .action-button
+                        {
+                        position: relative;
+                        padding: 5px 20px;
+                        margin: 0px 10px 10px 0px;
+                        float: left;
+                        border-radius: 10px;
+                        font-family: 'Pacifico', cursive;
+                        font-size: 25px;
+                        color: #FFF;
+                        text-decoration: none;	
+                        }   
+                        .blue
+                        {
+                        background-color: #3498DB;
+                        border-bottom: 5px solid #2980B9;
+                        text-shadow: 0px -2px #2980B9;
+                        }
+                        .action-button:active
+                        {
+                        transform: translate(0px,5px);
+                        -webkit-transform: translate(0px,5px);
+                        border-bottom: 1px solid;
+                        }
+                        .green
+                        {
+                        background-color: #82BF56;
+                        border-bottom: 5px solid #669644;
+                        text-shadow: 0px -2px #669644;
+                        }
+                        table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+                </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getcara()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Գանգատներն առողջական վիճակից ամենամյա բուժզննման ենթարկվելիս</div></br>
+        <button onclick="l()" id='pahpanel' class='action-button shadow animate blue'>+</button> 
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table  id='table2excel'>
+            <thead>
+                <tr id='oldDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="raz">
+                    <td>
+                        Գանգատներ առողջական վիճակից 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button id='asdf' onclick="addCarayutyun()" class='action-button shadow animate green'>պահպանել</button>
+        
+    </body>
+</html>

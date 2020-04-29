@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                        
+                        $("#ban").click(function(){
+                        $("#table2excel").table2excel({
+                        filename: "Անաշխատունակության հաշվառում" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                        });
+                    });
+                    });
+            function getfiz()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('/anashxatunakutyun/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showfiz)
+                }
+            }
+            function showfiz(anashxatakanutyun)
+            {   
+                $("#LDate").append('<th>' + 'սկիզբ։' + anashxatakanutyun.ddaayy + '/' + anashxatakanutyun.mmoonntthh + '/' + anashxatakanutyun.yyeeaarr + '</br>' + 'վերջ:' + anashxatakanutyun.dayend + '/' + anashxatakanutyun.monthend + '/' + anashxatakanutyun.yearend  + '</th>')
+                $("#gov").append('<td>' + anashxatakanutyun.himnakan + '</td>')
+                $("#goov").append('<td>' + anashxatakanutyun.ambulator + '</td>')
+                $("#gooov").append('<td>' + anashxatakanutyun.stacionar + '</td>')
+                $("#goooov").append('<td>' + anashxatakanutyun.hivanducyan + '</td>')
+                $("#gooooov").append('<td>' + anashxatakanutyun.full + '</td>')
+
+            }
+
+            function l()
+            {
+                $("#LDate").append("<th width='20'>"+"<label for='lov'>օր(սկիզբ)։</label>" +"<input id='lov' type='text'>" + "<label for='loov'>ամիս(սկիզբ)։</label>"+"<input id='loov' type='text'>"  + "<label for='looov'>տարի(սկիզբ)։</label>"+"<input id='looov' type='text'>" +"<label for='day'>օր(վերջ)։</label>" +"<input id='day' type='text'>" + "<label for='amis'>ամիս(վերջ)։</label>"+"<input id='amis' type='text'>"  + "<label for='tari'>տարի(վերջ)։</label>"+"<input id='tari' type='text'>" +"</th>");            
+                $("#gov").append(" <td><textarea id='loooov'></textarea></td>")
+                $("#goov").append(" <td><textarea id='looooov'></textarea></td>")
+                $("#gooov").append(" <td><textarea id='loooooov'></textarea></td>")
+                $("#goooov").append(" <td><textarea id='looooooov'></textarea></td>")
+                $("#gooooov").append(" <td><textarea id='loooooooov'></textarea></td>") 
+            }
+            function addFizikakan()
+            {
+                $.ajax({
+                    "url":'/anashxatunakutyun/list',
+                    "data":{
+                    "ididid": '{{request.GET.id}}',
+                    "ddaayy": $("#lov").val(),
+                    "mmoonntthh": $("#loov").val(),
+                    "yyeeaarr": $("#looov").val(),
+                    "dayend": $("#day").val(),
+                    "monthend": $("#amis").val(),
+                    "yearend": $("#tari").val(),
+                    "himnakan": $("#loooov").val(),
+                    "ambulator": $("#looooov").val(),
+                    "stacionar": $("#loooooov").val(),
+                    "hivanducyan": $("#looooooov").val(),
+                    "full": $("#loooooooov").val(),
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getfiz()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Անաշխատունակության հաշվառում</div></br>
+        <button onclick="l()" class='action-button shadow animate blue' id='pahpanel'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='LDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="gov">
+                    <td>
+                        Հիմնական հիվանդության ախտորոշումը
+                    </td>
+                <tr id='goov'>
+                    <td>
+                    Զ/ծ անաշխատականության օրերի թիվը </br> ամբուլատոր բուժման
+                    </td>
+                </tr>
+                <tr id='gooov'>
+                    <td>
+                    Զ/ծ անաշխատականության օրերի թիվը </br> ստացիոնար բուժման
+                    </td>
+                </tr>
+                <tr id='goooov'>
+                    <td>
+                        Զ/ծ անաշխատականության օրերի թիվը </br> հիվանդության պատճառով
+                    </td>
+                </tr>
+                <tr id='gooooov'>
+                    <td>
+                        Զ/ծ անաշխատականության օրերի թիվը </br> ընդամենը(օր)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addFizikakan()" id='asdf' class='action-button shadow animate green'>պահպանել</button>
+       
+    </body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                        
+                        $("#ban").click(function(){
+                        $("#table2excel").table2excel({
+                        filename: "Առողջական վիճակի գնահատականը" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                        });
+                    });
+                    });
+            function getaroxjakan()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('/aroxjakan/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showaroxjakan)
+                }
+            }
+            function showaroxjakan(aroxjakan)
+            {   
+                $("#TDate").append('<th>' + aroxjakan.օօրրր + '/' + aroxjakan.ամիիսսս + '/' + aroxjakan.տարրիիի +'</th>')
+                $("#axt").append('<td>' + aroxjakan.Ախտորոշու + '</td>')
+                $("#aro").append('<td>' + aroxjakan.ԱԱռողջական + '</td>')
+                $("#hash").append('<td>' + aroxjakan.Հաշվառվել + '</td>')
+                $("#fiz").append('<td>' + aroxjakan.Ֆիզպատ + '</td>')
+
+            }
+
+            function t()
+            {
+                $("#TDate").append("<th width='20'>"+"<label for='oorr'>օր։</label>" +"<input id='oorr' type='text'>" + "<label for='amiiss'>ամիս։</label>"+"<input id='amiiss' type='text'>"  + "<label for='tarrii'>տարի։</label>"+"<input id='tarrii' type='text'>" +"</th>" + "");            
+                $("#axt").append(" <td><textarea id='axtt'></textarea></td>")
+                $("#aro").append(" <td><textarea id='aroo'></textarea></td>")
+                $("#hash").append(" <td><textarea id='hashh'></textarea></td>")
+                $("#fiz").append(" <td><textarea id='fizz'></textarea></td>")
+            }
+            function addaroxjakan()
+            {
+                $.ajax({
+                    "url":'/aroxjakan/list',
+                    "data":{
+                    "tt": '{{request.GET.id}}',
+                    "օօրրր": $("#oorr").val(),
+                    "ամիիսսս": $("#amiiss").val(),
+                    "տարրիիի": $("#tarrii").val(),
+                    "Ախտորոշու": $("#axtt").val(),
+                    "ԱԱռողջական": $("#aroo").val(),
+                    "Հաշվառվել": $("#hashh").val(),
+                    "Ֆիզպատ": $("#fizz").val(),
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getaroxjakan()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Առողջական վիճակի գնահատականը</div></br>
+        <button onclick="t()" id='pahpanel' class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='TDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="axt">
+                    <td>
+                    Ախտորոշումը</br>
+                    (հիմնական</br>
+                    հիվանդությունը</br>
+                    բարդությունները և</br>
+                    հարակից հիվան-</br>
+                    դությունները)
+                    </td>
+                </tr>
+                <tr id="aro">
+                    <td>
+                        Առողջական</br>
+                        վիճակի խումբը</br>
+                        (1, 2, 3)
+                    </td>
+                </tr>
+                <tr id="hash">
+                    <td>
+                        Հաշվառել են արդյոք</br>
+                        դինամիկ բժշկական</br>
+                        հսկողության</br>
+                        համար(այո, ոչ)</br>
+                        որ մասնագետները
+                    </td>
+                </tr>
+                <tr id="fiz">
+                    <td>
+                        Ֆիզպատրաստության</br>
+                        խումբը
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addaroxjakan()" class='action-button shadow animate green'>պահպանել</button>
+        
+    </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                        
+                            $("#ban").click(function(){
+                            $("#table2excel").table2excel({
+                            filename: "Ֆիզիկական աճի տվյալները" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                            });
+                        });
+                        });
+            function getfiz()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('/fizikakan/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showfiz)
+                }
+            }
+            function showfiz(fizikakan)
+            {   
+                $("#LDate").append('<th>' + fizikakan.Օրր + '/' + fizikakan.Ամիսս + '/' + fizikakan.Տարիի +'</th>')
+                $("#gov").append('<td>' + fizikakan.Քաշը + '</td>')
+                $("#goov").append('<td>' + fizikakan.Հասակը + '</td>')
+                $("#gooov").append('<td>' + fizikakan.ԿրծքավանդակՀանգիստ + '</td>')
+                $("#goooov").append('<td>' + fizikakan.ԿրծքավանդակՇնչելիս + '</td>')
+                $("#gooooov").append('<td>' + fizikakan.ԿրծքավանդակԱրտաշնչելիս + '</td>')
+                $("#goooooov").append('<td>' + fizikakan.ՓորիՇրջագիծը + '</td>')
+                $("#gooooooov").append('<td>' + fizikakan.Շնչաչափը + '</td>')
+                $("#goooooooov").append('<td>' + fizikakan.Աջ + '</td>')
+                $("#gooooooooov").append('<td>' + fizikakan.Ձախ + '</td>')  
+
+            }
+
+            function l()
+            {
+                $("#LDate").append("<th width='20'>"+"<label for='lov'>օր։</label>" +"<input id='lov' type='text'>" + "<label for='loov'>ամիս։</label>"+"<input id='loov' type='text'>"  + "<label for='looov'>տարի։</label>"+"<input id='looov' type='text'>" +"</th>" + "");            
+                $("#gov").append(" <td><textarea id='loooov'></textarea></td>")
+                $("#goov").append(" <td><textarea id='looooov'></textarea></td>")
+                $("#gooov").append(" <td><textarea id='loooooov'></textarea></td>")
+                $("#goooov").append(" <td><textarea id='looooooov'></textarea></td>")
+                $("#gooooov").append(" <td><textarea id='loooooooov'></textarea></td>")
+                $("#goooooov").append(" <td><textarea id='looooooooov'></textarea></td>")
+                $("#gooooooov").append(" <td><textarea id='loooooooooov'></textarea></td>")
+                $("#goooooooov").append(" <td><textarea id='looooooooooov'></textarea></td>")
+                $("#gooooooooov").append(" <td><textarea id='loooooooooooov'></textarea></td>")  
+            }
+            function addFizikakan()
+            {
+                $.ajax({
+                    "url":'/fizikakan/list',
+                    "data":{
+                    "Օրր": $("#lov").val(),
+                    "Ամիսս": $("#loov").val(),
+                    "Տարիի": $("#looov").val(),
+                    "Քաշը": $("#loooov").val(),
+                    "Հասակը": $("#looooov").val(),
+                    "ԿրծքավանդակՀանգիստ": $("#loooooov").val(),
+                    "ԿրծքավանդակՇնչելիս": $("#looooooov").val(),
+                    "ԿրծքավանդակԱրտաշնչելիս": $("#loooooooov").val(),
+                    "ՓորիՇրջագիծը": $("#looooooooov").val(),
+                    "Շնչաչափը": $("#loooooooooov").val(),
+                    "Աջ": $("#looooooooooov").val(),
+                    "Ձախ": $("#loooooooooooov").val(),
+                    "oo": '{{request.GET.id}}',
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+</style>
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getfiz()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Ֆիզիկական աճի տվյալները</div></br>
+        <button onclick="l()" id='pahpanel' class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='LDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="gov">
+                    <td>
+                    Քաշը(կգ)
+                    </td>
+                <tr id='goov'>
+                    <td>
+                    Հասակը(սմ)
+                    </td>
+                </tr>
+                <tr id='gooov'>
+                    <td>
+                    Կրծքավանդակի շրջանագիծը(սմ)<br> հանգիստ    
+                    </td>
+                </tr>
+                <tr id='goooov'>
+                    <td>
+                        Կրծքավանդակի շրջանագիծը(սմ)<br> շնչելիս
+                    </td>
+                </tr>
+                <tr id='gooooov'>
+                    <td>
+                        Կրծքավանդակի շրջանագիծը(սմ)<br> արտաշնչելիս
+                    </td>
+                </tr>
+                <tr id='goooooov'>
+                    <td>
+                        Փորի շրջագիծը
+                    </td>
+                </tr>
+                <tr id='gooooooov'>
+                    <td>
+                        Շնչաչափը
+                    </td>
+                </tr>
+                <tr id='goooooooov'>
+                    <td>
+                        Ձեռքի ուժաչափը</br>աջ
+                    </td>
+                </tr>
+                <tr id='gooooooooov'>
+                    <td>
+                        Ձեռքի ուժաչափը</br>ձախ
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button id='asdf' onclick="addFizikakan()" class='action-button shadow animate green'>պահպանել</button>
+    </body>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</html>

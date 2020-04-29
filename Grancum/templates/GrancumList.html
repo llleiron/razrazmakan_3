@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script>
+            var URL = '/backend/Grancum';
+            
+            $(document).ready(
+                function(){
+                    $('#search').keyup(function(){
+                        search_table($(this).val());
+                    })
+                    function search_table(value){
+                        $('#table tr').each(function(){
+                            var found = 'false';
+                            $(this).each(function(){
+                                if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                {
+                                    found ='true';
+                                }
+                            });
+                            if(found == 'true')
+                            {
+                                $(this).show();
+                            }
+                            else{
+                                $(this).hide();
+                            }
+                        });
+                    }
+                });
+            function getGrancumner()
+            {
+                $.getJSON(URL,{},showGrancumner);
+            }
+            function showGrancumner(grancumner)
+            {
+                $("Grancumrows").html("")
+                $.each(
+                    grancumner,
+                    function(idx,grancum)
+                    {
+                        $("#Grancumrows").append("<tr><td>" + grancum.id + "</td><td>" + grancum.Անուն + "</td><td>" + grancum.Ազգանուն + "</td><td>" + grancum.Հայրանուն + "</td><td>" + grancum.ԳրանցմանԱմսաթիվ + "</td>" + "<td><button class='btnSelect action-button shadow animate green'>Մուտք</button></td>"+"</tr>");
+                    },
+
+                );
+                       $(".btnSelect").on('click', function(){
+                           var currentRow=$(this).closest("tr");
+                           var col1 = currentRow.find("td:eq(0)")
+                           var id = col1.html()
+                           window.location.assign('/Grancum/update/?id=' + encodeURIComponent(id))
+                       }),
+                $("#Grancumner").show();
+            }
+
+    </script>
+    <style>
+        .animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	position: relative;
+	padding: 5px 20px;
+    margin: 0px 10px 10px 0px;
+    float: left;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	color: #FFF;
+	text-decoration: none;	
+}
+        .green
+{
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+    </style>
+    </head>
+    <style>
+        body{
+	background-color: rgb(255, 255, 255);
+	font-size: 16px;
+	font-family: sans-serif,arial;
+}
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  padding: 5px;
+  height: 50px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: black;
+}
+
+.searchTerm:focus{
+  color: black;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 500px;
+  position: absolute;
+  top: 80px;
+  left: 1290px;
+  transform: translate(-50%, -50%);
+}
+#body{
+                background-color: rgb(185, 185, 184);
+            }
+    </style>
+    <body onload="getGrancumner()" id='body'>
+    <div style="background-color:navy;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Գրանցումներ</div>
+    <div class="wrap">
+        <div class="search">
+        <input placeholder="Փնտրել․․․" type="text" name="search" id="search" class="searchTerm form=control"/>
+    </div>
+    </div>
+    <table border="1" style="position: absolute; " cellpadding="5pt" id="table" align="center" width = '1000'>
+        <thead>
+        <tr>
+            <th id='hh'>հ/հ</th>
+            <th>Անուն</th>
+            <th>Ազգանուն</th>
+            <th>Հայրանուն</th>
+            <th>Գրանցման ամսաթիվ</th>
+            <th>Բուժ․ գրքույկ</th>
+        </tr>
+        </thead>
+        <tbody id="Grancumrows" contenteditable="false"></tbody>
+    </table>
+</body>
+</html>

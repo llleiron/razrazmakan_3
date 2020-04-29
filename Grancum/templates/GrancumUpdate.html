@@ -1,0 +1,232 @@
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script>
+            var URL = '/backend/Grancum/';
+
+            $(document).ready(
+                function(){
+                    $("#Grancumner").hide()
+                }
+            );
+
+            function a(){
+              window.location.assign('/Yndhanur/?id=' + '{{request.GET.id}}')
+             };
+            function b(){
+              window.location.assign('/Anamnez/?id=' + '{{request.GET.id}}')
+            };
+            function c(){
+                window.location.assign('/carayutyun/?id=' + '{{request.GET.id}}')
+             };
+            function d(){
+                window.location.assign('/gangatner/?id=' + '{{request.GET.id}}')
+            };
+            function e(){
+                window.location.assign('/fizikakan/?id=' + '{{request.GET.id}}')
+            };
+            function f(){
+                window.location.assign('/objectiv/?id=' + '{{request.GET.id}}')
+            };
+            function g(){
+                window.location.assign('/myus/?id=' + '{{request.GET.id}}')
+            };
+            function h(){
+                window.location.assign('/aroxjakan/?id=' + '{{request.GET.id}}')
+            };
+            function i(){
+                window.location.assign('/kanxargelich/?id=' + '{{request.GET.id}}')
+            };
+            function j(){
+                window.location.assign('/atam/?id=' + '{{request.GET.id}}')
+            };
+            function k(){
+                window.location.assign('/patvastum/?id=' + '{{request.GET.id}}')
+            };
+            function l(){
+                window.location.assign('/vichak/?id=' + '{{request.GET.id}}')
+            };
+            function m(){
+                window.location.assign('/anashxatunakutyun/?id=' + '{{request.GET.id}}')
+            };
+            function getGrancum()
+            {
+                
+                $.getJSON(URL + '{{request.GET.id}}')
+                .done(showGrancum)
+                .fail(function()
+                {
+                    alert("Գրանցումը գտնված չէ")
+                }
+                );
+            }
+
+            function showGrancum(grancum)
+            {   
+                $("#asdf").val(grancum.id)
+                $("#anun").val(grancum.Անուն)
+                $("#azganun").val(grancum.Ազգանուն)
+                $("#hayranun").val(grancum.Հայրանուն)
+                $("#GrancmanAmsativ").val(grancum.ԳրանցմանԱմսաթիվ)
+            }
+
+    function deleteGrancum()
+    {
+        sure = confirm('Վստահ եք որ ցանկանում եք հեռացնել այս գրանցումը ?')
+            if(sure){
+            $.ajax(
+            {
+                
+                "url": URL + '{{request.GET.id}}',
+                "type":"delete",
+                // "confirm": confirm("are you sure?"),
+                "success": delete_success(),
+                "next": window.location.assign('/Grancum/list'),
+            }
+            
+        )}
+        
+    }
+    function delete_success()
+    {
+      alert("Deleted Course Successfully");
+    }
+        </script>
+        <style>
+          .animate
+        {
+	    transition: all 0.1s;
+	    -webkit-transition: all 0.1s;
+        }
+
+        .action-button
+        {
+	    position: relative;
+	    padding: 5px 20px;
+        margin: 0px 10px 10px 0px;
+        float: left;
+	    border-radius: 10px;
+	    font-family: 'Pacifico', cursive;
+	    font-size: 25px;
+	    color: #FFF;
+	    text-decoration: none;	
+        }   
+        .blue
+        {
+	    background-color: #3498DB;
+	    border-bottom: 5px solid #2980B9;
+	    text-shadow: 0px -2px #2980B9;
+        }
+        .red
+{
+	background-color: rgb(192, 158, 4);
+	border-bottom: 5px solid rgb(192, 158, 4);
+	text-shadow: 0px -2px rgb(192, 158, 4);
+}
+        .action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}  
+.yellow
+{
+	background-color: rgb(233, 0, 0);
+	border-bottom: 5px solid rgba(84, 43, 179, 0.555);
+	text-shadow: 0px -2px rgba(84, 43, 179, 0.555);
+}
+.blue
+{
+	background-color: rgb(90, 165, 179);
+	border-bottom: 5px solid rgb(90, 165, 179);
+	text-shadow: 0px -2px rgb(90, 165, 179);
+}
+.wrapper {
+    text-align: center;
+}
+.button{
+    position: absolute;
+    left: 700px;
+}
+#body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+            </head>
+            <body onload="getGrancum()" id='body'>
+                <div style="background-color:navy;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Բուժ․ գրքույկ</div>
+                
+                <p> Հ/Հ: {{ request.GET.id }}</p>
+                <p > Անուն: 
+                <input type="text" id="anun" value="" readonly/></br></p>
+                <p> Ազգանուն:
+                <input type="text" id="azganun" value="" readonly/></br></p>
+                <p> Հայրանուն:
+                <input type="text" id="hayranun" value="" readonly/></br></p>
+                <p> Գրանցման ամսաթիվ:
+                <input type="text" id="GrancmanAmsativ" value="" readonly/></br></p>
+                <button class=' action-button shadow animate yellow' id='sure' onclick="deleteGrancum()">Հեռացնել</button>
+                <h1 align='center'> Ամբուլատոր քարտ</h1>    
+                <div class="wrapper">
+                <button  align='center' id='btnSelect' class="button action-button shadow animate blue" onclick="a()">1.Ընդհանուր տեղեկություններ</button>
+                </br>
+                </br>
+                </br>
+                <button  align='center' id='btnSelect' class="button action-button shadow animate blue" onclick="b()">2.Անամնեզ</button>
+            </br>
+            </br>
+            </br>
+        <button  align='center' class="button action-button shadow animate blue" onclick="c()">3.Ծառայության և կենցաղային պայմանները</button>
+    </br>
+</br>
+</br>
+  <button  align='center' class="button action-button shadow animate blue" onclick="d()">4.Գանգատներ առողջական վիճակից ամենամյա բուժզննման ենթարկվելիս</button>
+</br>
+</br>
+</br>
+  <button  align='center' class="button action-button shadow animate blue" onclick="e()">5.Ֆիզիկական աճի տվյալները</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="f()">6.Օբյեկտիվ հետազոտությունների տվյալները</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="g()">7.Մյուս մասնագետների բուժհետազոտման տվյալները</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="h()">9․ Առողջական վիճակի գնահատականը</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="i()">10․ Բուժկանխարգելիչ ցուցումները ամենամյա բուժզննման ենթարկվելիս, դրանց կատարումը և արդյունքները</button>
+</br>
+</br>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="k()">11․ Կանխապահով ներարկումները</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="j()">12․ Ատամնաբուժական օգնության հաշվառում</button>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="l()">13․ Առողջական վիճակի հետազոտման տվյալները ներառյալ ամբուլատոր, հոսպիտալային, առողջարանային և տնային բուժումը, խորհրդատուների, ռազմաբժշկական հանձնաժողովի եզրակացությունը, ամենամյա բժշկական հետազոտությունների միջանկյալ բուժստուգումները</button>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<button  align='center' class="button action-button shadow animate blue" onclick="m()">14. Անաշխատունակության հաշվառում</button>
+</div>
+                <p align='center'></p>
+            </br>
+        </body>
+        </html>  

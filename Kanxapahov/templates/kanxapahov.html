@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                        
+                        $("#ban").click(function(){
+                        $("#table2excel").table2excel({
+                        filename: "Կանխապահով ներարկումները" + " " +"{{request.GET.id}}" + "-ի համար" +".xls"
+                        });
+                    });
+                    });
+            function getfiz()
+            {
+                for(let i = 2021; i < 2100; i++)
+                {
+                    a = $.getJSON('patvastum/detail/' + '{{request.GET.id}}' + '/' + i)
+                    .done(showfiz)
+                }
+            }
+            function showfiz(fizikakan)
+            {   
+                $("#LDate").append('<th>' + fizikakan.oօր + '/' + fizikakan.aԱմիս + '/' + fizikakan.այդի +'</th>')
+                $("#gov").append('<td>' + fizikakan.Պատվաստանյութ + '</td>')
+                $("#goov").append('<td>' + fizikakan.Դոզա + '</td>')
+                $("#gooov").append('<td>' + fizikakan.Ազդեցություն + '</td>')
+            }
+
+            function l()
+            {
+                $("#LDate").append("<th width='20'>"+"<label for='pov'>օր։</label>" +"<input id='pov' type='text'>" + "<label for='poov'>ամիս։</label>"+"<input id='poov' type='text'>"  + "<label for='pooov'>տարի։</label>"+"<input id='pooov' type='text'>" +"</th>" + "");            
+                $("#gov").append(" <td><textarea id='poooov'></textarea></td>")
+                $("#goov").append(" <td><textarea id='pooooov'></textarea></td>")
+                $("#gooov").append(" <td><textarea id='poooooov'></textarea></td>")
+            }
+            function addFizikakan()
+            {
+                $.ajax({
+                    "url":'/patvastum/list',
+                    "data":{
+                    "այդի":'{{request.GET.id}}',
+                    "oօր": $("#pov").val(),
+                    "aԱմիս": $("#poov").val(),
+                    "tՏարի": $("#pooov").val(),
+                    "Պատվաստանյութ": $("#poooov").val(),
+                    "Դոզա": $("#pooooov").val(),
+                    "Ազդեցություն": $("#poooooov").val(),
+                           },
+                    "type":"post",
+                    "success" : function(){alert('a')},
+                    "error" : function(){alert('b')},
+                });
+            }
+        </script>
+        <style>
+            .animate
+            {
+                transition: all 0.1s;
+                -webkit-transition: all 0.1s;
+            }
+                
+            .action-button
+            {
+                position: relative;
+                padding: 5px 20px;
+                margin: 0px 10px 10px 0px;
+                float: left;
+                border-radius: 10px;
+                font-family: 'Pacifico', cursive;
+                font-size: 25px;
+                color: #FFF;
+                text-decoration: none;	
+            }   
+            .blue
+            {
+                background-color: #3498DB;
+                border-bottom: 5px solid #2980B9;
+                text-shadow: 0px -2px #2980B9;
+            }
+            .action-button:active
+            {
+                transform: translate(0px,5px);
+                -webkit-transform: translate(0px,5px);
+                border-bottom: 1px solid;
+            }
+            .green
+            {
+                background-color: #82BF56;
+                border-bottom: 5px solid #669644;
+                text-shadow: 0px -2px #669644;
+            }
+            #pahpanel{
+                left: 1500px;
+            }
+            #asdf{
+                left: 1400px;
+            }
+            #ban{
+                right: 65px;
+            } 
+            table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            overflow: hidden;
+            width: 100%;
+            
+            }
+
+            table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            }
+
+            table tr:nth-child(even){background-color: #f2f2f2;}
+
+            table tr:hover {background-color: #ddd;}
+
+            table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: blue;
+            color: white;
+            }
+            #body{
+                background-color: rgb(185, 185, 184);
+            }
+        </style>
+        <title>
+            a
+        </title>
+    </head>
+    <body onload="getfiz()" id='body'>
+        <div style="background-color:blue;color:white;font-family:arial;font-size:20pt;font-weight:bold" align='center'>Կանխապահով ներարկումները</div></br>
+        <button onclick="l()" id="pahpanel" class='action-button shadow animate blue'>+</button>
+        <button id='ban' class='action-button shadow animate blue'>Ներբեռնել</button>
+        <table id='table2excel'>
+            <thead>
+                <tr id='LDate'>
+                    <th>
+                        Ամսաթիվը
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="gov">
+                    <td>
+                    Պատվաստանյութի անվանումը
+                    </td>
+                <tr id='goov'>
+                    <td>
+                    Դոզան
+                    </td>
+                </tr>
+                <tr id='gooov'>
+                    <td>
+                    Ազդեցությունը    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addFizikakan()" id ='asdf' class='action-button shadow animate green'>պահպանել</button>
+       
+    </body>
+</html>
